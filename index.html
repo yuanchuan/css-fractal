@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>CSS Fractals -- Pythagoras tree</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+    .root {
+      position: relative;
+      width: 5em;
+      height: 5em;
+      --level: 0;
+      --sizea: calc(var(--wa, 50) * 1%);
+      --sizeb: calc(var(--wb, 50) * 1%);
+      --dega: calc(var(--ra, 0) * 1deg);
+      --degb: calc(var(--rb, 0) * 1deg);
+    }
+    .root div {
+      position: absolute;
+      bottom: 100%;
+    }
+    .root, .root div {
+      background: hsl(
+        calc(288 - 21.9 * var(--level)),
+        calc(58% + 1% * var(--level)),
+        calc(17% + 3.4% * var(--level))
+      );
+    }
+    .root div:first-child {
+      width: var(--sizea);
+      height: var(--sizea);
+      transform: rotate(var(--dega));
+      transform-origin: 0 100%;
+      left: 0;
+    }
+    .root div:last-child {
+      width: var(--sizeb);
+      height: var(--sizeb);
+      transform: rotate(var(--degb));
+      transform-origin: 100% 100%;
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="root" max-level="10"></div>
+
+  <script>
+    (function() {
+
+      const { sqrt, pow, atan, sin, PI } = Math;
+      const doc = document, win = window;
+
+      function build(root, level, max) {
+        level && setTimeout(() => {
+          let nodes = (max == level)
+            ? [root] : root.querySelectorAll('[node]');
+          [].forEach.call(nodes, n => {
+            let next = max - level + 1;
+            n.removeAttribute('node');
+            n.innerHTML = `<div style="--level: ${next}" node></div>`
+              .repeat(2);
+          });
+          build(root, --level, max);
+        }, 500);
+      }
+
+      function compute(x, y, w, h) {
+        const r = x / w ;
+        const d = (1 - y / h) * sin(PI / 3);
+        const d2 = pow(d, 2);
+        const deg = PI / 180;
+        return {
+          '--wa': sqrt(d2 + pow(r, 2)) * 100,
+          '--wb': sqrt(d2 + pow((1 - r), 2)) * 100,
+          '--ra': atan(d / r) / -deg,
+          '--rb': atan(d / (1 - r)) / deg
+        }
+      }
+
+      function update(e) {
+        const props = compute(
+          e.clientX || e.pageX, e.clientY || e.pageY,
+          win.innerWidth, win.innerHeight
+        );
+        Object.keys(props).forEach(name => (
+          root.style.setProperty(name, props[name])
+        ));
+        e.preventDefault();
+      };
+
+      ['touchmove', 'mousemove']
+        .forEach(n => doc.addEventListener(n, update));
+
+      const root = doc.querySelector('.root');
+      const level = +root.getAttribute('max-level');
+      build(root, level, level);
+
+    }());
+  </script>
+</body>
+</html>
