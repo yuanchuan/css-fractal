@@ -20,6 +20,7 @@
       width: 5em;
       height: 5em;
       --level: 0;
+      --max-level: 9;
       --sizea: calc(var(--wa, 50) * 1%);
       --sizeb: calc(var(--wb, 50) * 1%);
       --dega: calc(var(--ra, 0) * 1deg);
@@ -30,10 +31,10 @@
       bottom: 100%;
     }
     .root, .root div {
-      background: hsl(
-        calc(288 - 21.9 * var(--level)),
+      background-color: hsl(
+        calc(288 - 219 * var(--level) / var(--max-level)),
         calc(58% + 1% * var(--level)),
-        calc(17% + 3.4% * var(--level))
+        calc(17% + 34% * var(--level) / var(--max-level))
       );
     }
     .root div:first-child {
@@ -50,20 +51,22 @@
       transform-origin: 100% 100%;
       right: 0;
     }
-    a[href*="index.html"] {
+    a[href*="github.com"] {
       position: fixed;
-      top: .5em; right: .5em;
+      font-family: helvetica, serif;
+      top: 1em; right: 1em;
       text-decoration: none;
       color: #fff;
       padding: .5em;
       font-size: .8em;
-      background: rgba(0, 0, 0, .5);
+      color: rgba(31, 116, 133, .5);
+      background: rgba(255, 255, 255, .8);
     }
   </style>
 </head>
 <body>
-  <div class="root" max-level="10"></div>
-  <a href="https://github.com/yuanchuan/css-fractal/blob/master/index.html">view source</a>
+  <div class="root" max-level="9"></div>
+  <a href="https://github.com/yuanchuan/css-fractal">view source</a>
 
   <script>
     (function() {
