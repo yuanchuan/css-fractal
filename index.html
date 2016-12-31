@@ -51,22 +51,10 @@
       transform-origin: 100% 100%;
       right: 0;
     }
-    a[href*="github.com"] {
-      position: fixed;
-      font-family: helvetica, serif;
-      top: 1em; right: 1em;
-      text-decoration: none;
-      color: #fff;
-      padding: .5em;
-      font-size: .8em;
-      color: rgba(31, 116, 133, .5);
-      background: rgba(255, 255, 255, .8);
-    }
   </style>
 </head>
 <body>
   <div class="root" max-level="9"></div>
-  <a href="https://github.com/yuanchuan/css-fractal">view source</a>
 
   <script>
     (function() {
@@ -121,5 +109,22 @@
 
     }());
   </script>
+
+
+  <!-- view source button -->
+  <a href="https://github.com/yuanchuan/css-fractal">view source</a>
+  <style>
+    a[href*="github.com"] {
+      position: fixed;
+      top: 1em; right: 1em;
+      padding: .5em;
+      font-size: .8em;
+      font-family: helvetica, serif;
+      text-decoration: none;
+      background: rgba(255, 255, 255, .8);
+      color: rgba(31, 116, 133, .5);
+    }
+  </style>
+
 </body>
 </html>
