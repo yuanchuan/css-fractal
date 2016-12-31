@@ -8,7 +8,7 @@
 
 ![](screenshot.png)
 
-### Reference
+## Reference
 
 * [hsl()](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#hsl())
 * [calc()](https://developer.mozilla.org/en-US/docs/Web/CSS/calc)
