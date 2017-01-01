@@ -1,5 +1,5 @@
 # CSS-fractal
-> A proof of concept to show the *elegance* of css. [See the demo](https://yuanchuan.github.io/css-fractal)
+> A proof of concept to show the *elegance* of css. [See the demo](https://yuanchuan.github.io/css-fractal/)
 
 ### Comparing to
 
