@@ -56,7 +56,7 @@
   </style>
 </head>
 <body>
-  <div class="root" max-level="9"></div>
+  <div class="root" data-max-level="9"></div>
 
   <script>
     (function() {
@@ -74,7 +74,8 @@
           [].forEach.call(nodes, n => {
             let next = max - level + 1;
             n.removeAttribute('node');
-            n.innerHTML = `<div style="--level: ${next}" node></div>`
+            n.innerHTML =
+              `<div style="--level: ${ next }" node></div>`
               .repeat(2);
           });
           build(root, --level, max);
@@ -109,7 +110,7 @@
         .forEach(n => doc.addEventListener(n, update));
 
       const root = doc.querySelector('.root');
-      const level = +root.getAttribute('max-level');
+      const level = +root.getAttribute('data-max-level') || 8;
       build(root, level, level);
 
     }());
