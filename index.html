@@ -19,8 +19,10 @@
       position: relative;
       width: 5em;
       height: 5em;
+
+      /* initial values */
       --level: 0;
-      --max-level: 9;
+      --max-level: 1;
       --sizea: calc(var(--wa, 50) * 1%);
       --sizeb: calc(var(--wb, 50) * 1%);
       --dega: calc(var(--ra, 0) * 1deg);
@@ -64,8 +66,11 @@
 
       function build(root, level, max) {
         level && setTimeout(() => {
-          let nodes = (max == level)
-            ? [root] : root.querySelectorAll('[node]');
+          let nodes = root.querySelectorAll('[node]');
+          if (max === level) {
+            root.style.setProperty('--max-level', max);
+            nodes = [root];
+          }
           [].forEach.call(nodes, n => {
             let next = max - level + 1;
             n.removeAttribute('node');
@@ -80,12 +85,12 @@
         const r = x / w ;
         const d = (1 - y / h) * sin(PI / 3);
         const d2 = pow(d, 2);
-        const deg = PI / 180;
+        const deg = 180 / PI;
         return {
           '--wa': sqrt(d2 + pow(r, 2)) * 100,
           '--wb': sqrt(d2 + pow((1 - r), 2)) * 100,
-          '--ra': atan(d / r) / -deg,
-          '--rb': atan(d / (1 - r)) / deg
+          '--ra': atan(d / r) * -deg,
+          '--rb': atan(d / (1 - r)) * deg
         }
       }
 
