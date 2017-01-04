@@ -60,25 +60,25 @@
 
   <script>
     (function() {
+      const root = document.querySelector('.root');
+      if (!root) return false;
 
       const { sqrt, pow, atan, sin, PI } = Math;
-      const doc = document, win = window;
+      const maxLevel = root.getAttribute('data-max-level') || 8;
+      root.style.setProperty('--max-level', maxLevel);
 
-      function build(root, level, max) {
+      function build(root, level) {
         level && setTimeout(() => {
-          let nodes = root.querySelectorAll('[node]');
-          if (max === level) {
-            root.style.setProperty('--max-level', max);
-            nodes = [root];
-          }
+          let nodes = (maxLevel === level)
+            ? [root] : root.querySelectorAll('[node]');
           [].forEach.call(nodes, n => {
-            let next = max - level + 1;
+            let next = maxLevel - level + 1;
             n.removeAttribute('node');
             n.innerHTML =
               `<div style="--level: ${ next }" node></div>`
               .repeat(2);
           });
-          build(root, --level, max);
+          build(root, --level);
         }, 500);
       }
 
@@ -98,20 +98,18 @@
       function update(e) {
         const props = compute(
           e.clientX || e.pageX, e.clientY || e.pageY,
-          win.innerWidth, win.innerHeight
+          window.innerWidth, window.innerHeight
         );
         Object.keys(props).forEach(name => (
           root.style.setProperty(name, props[name])
         ));
         e.preventDefault();
-      };
+      }
 
       ['touchmove', 'mousemove']
-        .forEach(n => doc.addEventListener(n, update));
+        .forEach(n => document.addEventListener(n, update));
 
-      const root = doc.querySelector('.root');
-      const level = +root.getAttribute('data-max-level') || 8;
-      build(root, level, level);
+      build(root, maxLevel);
 
     }());
   </script>
