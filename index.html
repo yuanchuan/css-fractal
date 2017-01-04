@@ -74,7 +74,7 @@
           [].forEach.call(nodes, n => {
             n.removeAttribute('node');
             n.innerHTML =
-              `<div style="--level: ${ max - level + 1}" node></div>`
+              `<div style="--level: ${ max - level + 1 }" node></div>`
               .repeat(2);
           });
           build(root, --level);
@@ -99,8 +99,8 @@
           e.clientX || e.pageX, e.clientY || e.pageY,
           window.innerWidth, window.innerHeight
         );
-        Object.keys(props).forEach(name => (
-          root.style.setProperty(name, props[name])
+        Object.keys(props).forEach(n => (
+          root.style.setProperty(n, props[n])
         ));
         e.preventDefault();
       }
