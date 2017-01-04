@@ -106,7 +106,7 @@
         e.preventDefault();
       }
 
-      ['touchmove', 'mousemove']
+      ['touchmove', 'touchstart', 'mousemove']
         .forEach(n => document.addEventListener(n, update));
 
       build(root, maxLevel);
