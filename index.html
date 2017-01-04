@@ -102,7 +102,9 @@
         Object.keys(props).forEach(n => (
           root.style.setProperty(n, props[n])
         ));
-        e.preventDefault();
+        if (e.type === 'touchmove') {
+          e.preventDefault();
+        }
       }
 
       ['touchmove', 'touchstart', 'mousemove']
