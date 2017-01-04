@@ -64,18 +64,17 @@
       if (!root) return false;
 
       const { sqrt, pow, atan, sin, PI } = Math;
-      const maxLevel = root.getAttribute('data-max-level') || 8;
-      root.style.setProperty('--max-level', maxLevel);
+      const max = root.getAttribute('data-max-level') || 8;
+      root.style.setProperty('--max-level', max);
 
       function build(root, level) {
         level && setTimeout(() => {
-          let nodes = (maxLevel === level)
+          let nodes = (max === level)
             ? [root] : root.querySelectorAll('[node]');
           [].forEach.call(nodes, n => {
-            let next = maxLevel - level + 1;
             n.removeAttribute('node');
             n.innerHTML =
-              `<div style="--level: ${ next }" node></div>`
+              `<div style="--level: ${ max - level + 1}" node></div>`
               .repeat(2);
           });
           build(root, --level);
@@ -109,7 +108,7 @@
       ['touchmove', 'touchstart', 'mousemove']
         .forEach(n => document.addEventListener(n, update));
 
-      build(root, maxLevel);
+      build(root, max);
 
     }());
   </script>
