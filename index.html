@@ -96,15 +96,13 @@
 
       function update(e) {
         const props = compute(
-          e.clientX || e.pageX, e.clientY || e.pageY,
+          e.clientX || (e.changedTouches && e.changedTouches[0] || e).pageX,
+          e.clientY || (e.changedTouches && e.changedTouches[0] || e).pageY,
           window.innerWidth, window.innerHeight
         );
         Object.keys(props).forEach(n => (
           root.style.setProperty(n, props[n])
         ));
-        if (e.type === 'touchmove') {
-          e.preventDefault();
-        }
       }
 
       ['touchmove', 'touchstart', 'mousemove']
